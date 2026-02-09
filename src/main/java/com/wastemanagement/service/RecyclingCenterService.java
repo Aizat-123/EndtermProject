@@ -56,7 +56,6 @@ public class RecyclingCenterService {
             throw new ResourceNotFoundException("Recycling center not found with id: " + id);
         }
 
-        // Check if center has waste items
         List<WasteItem> wasteItems = wasteItemRepository.findByCenterId(id);
         if (!wasteItems.isEmpty()) {
             throw new InvalidInputException("Cannot delete center with existing waste items");

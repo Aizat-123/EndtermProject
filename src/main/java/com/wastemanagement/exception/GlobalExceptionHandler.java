@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
             ResourceNotFoundException ex, WebRequest request) {
-        ErrorResponse error = ErrorResponse.builder()
+        ErrorResponse error = new ErrorResponse.ErrorResponseBuilder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("Not Found")
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateResourceException(
             DuplicateResourceException ex, WebRequest request) {
-        ErrorResponse error = ErrorResponse.builder()
+        ErrorResponse error = new ErrorResponse.ErrorResponseBuilder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())
                 .error("Conflict")
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<ErrorResponse> handleInvalidInputException(
             InvalidInputException ex, WebRequest request) {
-        ErrorResponse error = ErrorResponse.builder()
+        ErrorResponse error = new ErrorResponse.ErrorResponseBuilder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Bad Request")
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DatabaseOperationException.class)
     public ResponseEntity<ErrorResponse> handleDatabaseOperationException(
             DatabaseOperationException ex, WebRequest request) {
-        ErrorResponse error = ErrorResponse.builder()
+        ErrorResponse error = new ErrorResponse.ErrorResponseBuilder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .error("Internal Server Error")
@@ -78,11 +78,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(
             Exception ex, WebRequest request) {
-        ErrorResponse error = ErrorResponse.builder()
+        ErrorResponse error = new ErrorResponse.ErrorResponseBuilder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .error("Internal Server Error")
-                .message("An unexpected error occurred")
+                .message("An unexpected error occurred: " + ex.getMessage())
                 .path(request.getDescription(false))
                 .build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);

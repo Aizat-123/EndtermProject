@@ -3,16 +3,12 @@ package com.wastemanagement.model;
 import com.wastemanagement.model.base.BaseEntity;
 import com.wastemanagement.exception.InvalidInputException;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "recycling_center")
-@EqualsAndHashCode(callSuper = true)
 public class RecyclingCenter extends BaseEntity {
 
     @Column(nullable = false)
@@ -24,6 +20,7 @@ public class RecyclingCenter extends BaseEntity {
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<WasteItem> wasteItems = new ArrayList<>();
 
+    // Constructors
     public RecyclingCenter() {
         super();
     }
@@ -32,6 +29,31 @@ public class RecyclingCenter extends BaseEntity {
         super(id, name);
         this.capacity = capacity;
         this.address = address;
+    }
+
+    // Getters and setters
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<WasteItem> getWasteItems() {
+        return wasteItems;
+    }
+
+    public void setWasteItems(List<WasteItem> wasteItems) {
+        this.wasteItems = wasteItems;
     }
 
     @Override
@@ -54,5 +76,15 @@ public class RecyclingCenter extends BaseEntity {
             return getName() + " located at " + address.getFullAddress();
         }
         return getName() + " (no address specified)";
+    }
+
+    @Override
+    public String toString() {
+        return "RecyclingCenter{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", capacity=" + capacity +
+                ", address=" + address +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.wastemanagement.repository.interfaces;
 
-import com.wastemanagement.model.WasteItem; // Убедитесь, что это импортируется
+import com.wastemanagement.model.WasteItem;
 import java.util.List;
 import java.util.Optional;
 

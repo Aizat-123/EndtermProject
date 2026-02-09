@@ -1,9 +1,16 @@
 package com.wastemanagement.model.base;
 
 import com.wastemanagement.exception.InvalidInputException;
+import jakarta.persistence.*;
 
+@MappedSuperclass
 public abstract class BaseEntity {
+
+    @Id
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
     private String name;
 
     public BaseEntity() {
@@ -21,7 +28,7 @@ public abstract class BaseEntity {
         return String.format("[%d] %s (%s)", id, name, getType());
     }
 
-    // Getters/Setters
+    // Getters and setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

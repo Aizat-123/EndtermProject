@@ -1,13 +1,8 @@
 package com.wastemanagement.dto;
 
+import com.wastemanagement.model.WasteItem;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class WasteItemDTO {
 
     @NotNull(message = "ID is required")
@@ -29,8 +24,69 @@ public class WasteItemDTO {
 
     private Integer centerId;
 
-    // Можно добавить методы преобразования
-    public static WasteItemDTO fromModel(com.wastemanagement.model.WasteItem item) {
+    // Constructors
+    public WasteItemDTO() {
+    }
+
+    public WasteItemDTO(Integer id, String name, String wasteType, Double weight, Boolean recyclable, Integer centerId) {
+        this.id = id;
+        this.name = name;
+        this.wasteType = wasteType;
+        this.weight = weight;
+        this.recyclable = recyclable;
+        this.centerId = centerId;
+    }
+
+    // Getters and setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getWasteType() {
+        return wasteType;
+    }
+
+    public void setWasteType(String wasteType) {
+        this.wasteType = wasteType;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Boolean getRecyclable() {
+        return recyclable;
+    }
+
+    public void setRecyclable(Boolean recyclable) {
+        this.recyclable = recyclable;
+    }
+
+    public Integer getCenterId() {
+        return centerId;
+    }
+
+    public void setCenterId(Integer centerId) {
+        this.centerId = centerId;
+    }
+
+    public static WasteItemDTO fromModel(WasteItem item) {
         return new WasteItemDTO(
                 item.getId(),
                 item.getName(),
@@ -39,5 +95,17 @@ public class WasteItemDTO {
                 item.isRecyclable(),
                 item.getCenterId()
         );
+    }
+
+    @Override
+    public String toString() {
+        return "WasteItemDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", wasteType='" + wasteType + '\'' +
+                ", weight=" + weight +
+                ", recyclable=" + recyclable +
+                ", centerId=" + centerId +
+                '}';
     }
 }

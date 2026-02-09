@@ -6,15 +6,12 @@ import com.wastemanagement.model.interfaces.Searchable;
 import com.wastemanagement.model.interfaces.Validatable;
 import com.wastemanagement.exception.InvalidInputException;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Data
+
 @Entity
 @Table(name = "waste_items")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "waste_type", discriminatorType = DiscriminatorType.STRING)
-@EqualsAndHashCode(callSuper = true)
 public abstract class WasteItem extends BaseEntity implements Chargeable, Validatable, Searchable<String> {
 
     @Column(nullable = false)
@@ -26,10 +23,14 @@ public abstract class WasteItem extends BaseEntity implements Chargeable, Valida
     @Column(name = "center_id")
     protected Integer centerId;
 
+    @Transient
+    private String wasteType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "center_id", insertable = false, updatable = false)
     protected RecyclingCenter center;
 
+    // Constructors
     protected WasteItem() {
         super();
     }
@@ -38,6 +39,39 @@ public abstract class WasteItem extends BaseEntity implements Chargeable, Valida
         super(id, name);
         this.weight = weight;
         this.recyclable = recyclable;
+    }
+
+    // Getters and setters
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public boolean isRecyclable() {
+        return recyclable;
+    }
+
+    public void setRecyclable(boolean recyclable) {
+        this.recyclable = recyclable;
+    }
+
+    public Integer getCenterId() {
+        return centerId;
+    }
+
+    public void setCenterId(Integer centerId) {
+        this.centerId = centerId;
+    }
+
+    public RecyclingCenter getCenter() {
+        return center;
+    }
+
+    public void setCenter(RecyclingCenter center) {
+        this.center = center;
     }
 
     @Override
@@ -69,5 +103,17 @@ public abstract class WasteItem extends BaseEntity implements Chargeable, Valida
 
     public String disposalInfo() {
         return recyclable ? "Recycle" : "Dispose";
+    }
+
+    @Override
+    public String toString() {
+        return "WasteItem{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", wasteType='" + getWasteType() + '\'' +
+                ", weight=" + weight +
+                ", recyclable=" + recyclable +
+                ", centerId=" + centerId +
+                '}';
     }
 }

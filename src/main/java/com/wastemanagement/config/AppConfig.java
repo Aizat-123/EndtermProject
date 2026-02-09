@@ -18,7 +18,6 @@ public class AppConfig {
         return new ObjectMapper();
     }
 
-    // Можно добавить другие бины конфигурации
     @Bean
     public String appName() {
         return "Waste Management API";
