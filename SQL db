@@ -1,0 +1,27 @@
+CREATE TABLE recycling_center (
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    capacity INT NOT NULL,
+    street VARCHAR(100),
+    city VARCHAR(50),
+    postal_code VARCHAR(20)
+);
+
+CREATE TABLE waste_items (
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    waste_type VARCHAR(20) NOT NULL CHECK (waste_type IN ('plastic', 'electronic', 'paper')),
+    weight DOUBLE PRECISION NOT NULL,
+    recyclable BOOLEAN NOT NULL,
+    center_id INT,
+    FOREIGN KEY (center_id) REFERENCES recycling_center(id)
+);
+
+INSERT INTO recycling_center (id, name, capacity) VALUES 
+(1, 'EcoCenter', 1000),
+(2, 'GreenPoint', 500);
+
+INSERT INTO waste_items (id, name, waste_type, weight, recyclable, center_id) VALUES 
+(1, 'Plastic Bottles', 'plastic', 15.5, TRUE, 1),
+(2, 'Old Smartphone', 'electronic', 0.3, TRUE, 2),
+(3, 'Newspapers', 'paper', 2.0, TRUE, 1);
